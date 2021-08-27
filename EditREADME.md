@@ -26,6 +26,8 @@
 
 | 编号 | 名称 | 描述 | RSS  |  最新内容 |
 | --- | --- | --- | --- |  --- |
+| <h2 id="学术动态">软术动态</h2> |  |   |  |
+| <div id="P001" style="text-align: center;"><img src="./_media/favicon/P001.png" width="30px" style="width:30px;height: auto;"/><br><span>P001</span></div> |  JSAC | IEEE Journal on Selected Areas in Communications (CCF A J)| {{latest_content}} |  [订阅地址](https://ieeexplore.ieee.org/rss/TOC49.XML) |
 | <h2 id="软件工具">软件工具</h2> |  |   |  |
 | <div id="S001" style="text-align: center;"><img src="./_media/favicon/S001.png" width="30px" style="width:30px;height: auto;"/><br><span>S001</span></div> |  不死鸟 | 不死鸟:专注分享优质资源 | {{latest_content}} |  [订阅地址](https://iao.su/feed) | 
 | <div id="S002" style="text-align: center;"><img src="./_media/favicon/S002.png" width="30px" style="width:30px;height: auto;"/><br><span>S002</span></div> | 精品MAC应用分享 | 精品MAC应用分享，每天分享大量mac软件，为您提供优质的mac软件,免费软件下载服务 |  {{latest_content}} | [订阅地址](https://xclient.info/feed) | 
