@@ -1,7 +1,7 @@
 name: zhaoolee
 on:
   schedule:
-    - cron:  '0 22 * * *'    # 国际标准时间22点（北京时间早上6点发） 
+    - cron:  '25 10 * * *'    # 国际标准时间22点（北京时间早上6点发） 
   push:
     branches:    
       - main
@@ -19,18 +19,18 @@ jobs:
         with:
           command: install -d # Install all dependencies, including development ones
       - name: Build
-        env:
-            USER: ${{ secrets.USER }}
-            PASSWORD: ${{ secrets.PASSWORD }}
-            HOST: ${{ secrets.HOST }}
+        # env:
+            # USER: ${{ secrets.USER }}
+            # PASSWORD: ${{ secrets.PASSWORD }}
+            # HOST: ${{ secrets.HOST }}
         uses: VaultVulp/action-pipenv@v2.0.1
         with:
           command: run build
       - name: Commit and push if changed   # 更新README.md
         run: |
           git diff
-          git config --global user.email "zhaoolee@gmail.com"
-          git config --global user.name "zhaoolee"
+          git config --global user.email "wlcheng12@gmail.com"
+          git config --global user.name "wlchenGG"
           git add README.md
           git add docs
           git commit -m "Github Action auto Updated"
