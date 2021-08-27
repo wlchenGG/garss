@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 
 def get_rss_info(feed_url):
     result = {"result": []}
-    # 如果请求出错,则重新请求,最多五次
+    # 如果请求出错，则重新请求，最多五次
     for i in range(5):
         try:
             headers = {
@@ -32,6 +32,9 @@ def get_rss_info(feed_url):
                 title = entrie["title"]
                 link = entrie["link"]
                 date = time.strftime("%Y-%m-%d", entrie["published_parsed"])
+
+                title = title.replace("\n", "")
+                title = title.replace("\r", "")
                 result["result"].append({
                     "title": title,
                     "link": link,
@@ -60,7 +63,7 @@ def send_mail(email, title, contents):
         if(os.environ["HOST"]):
             host = os.environ["HOST"]
     except:
-        print("无法获取github的secrets配置信息,开始使用本地变量")
+        print("无法获取 github 的 secrets 配置信息，开始使用本地变量")
         if(os.path.exists(os.path.join(os.getcwd(),"secret.json"))):
             with open(os.path.join(os.getcwd(),"secret.json"),'r') as load_f:
                 load_dict = json.load(load_f)
@@ -104,14 +107,14 @@ def replace_readme():
             latest_content = ""
             parse_result = urlparse(link)
             scheme_netloc_url = str(parse_result.scheme)+"://"+str(parse_result.netloc)
-            latest_content = "[暂无法通过爬虫获取信息, 点击进入源网站主页]("+ scheme_netloc_url +")"
+            latest_content = "[暂无法通过爬虫获取信息，点击进入源网站主页]("+ scheme_netloc_url +")"
 
             # 加入到索引
             try:
                 for rss_info_atom in rss_info:
                     if (rss_info_atom["date"] == datetime.today().strftime("%Y-%m-%d")):
                         new_num = new_num + 1
-                        current_date_news_index[0] = current_date_news_index[0] + "<br/>"+ "🌈 " +"[" + "‣ " + rss_info_atom["title"]  +"](" + rss_info_atom["link"] +")"  + "(第" + str(new_num) +"篇)"
+                        current_date_news_index[0] = current_date_news_index[0] + "<br/>"+ "🌈 " +"[" + "‣ " + rss_info_atom["title"] + "| 第" + str(new_num) +"篇"  +"](" + rss_info_atom["link"] +")"  
             except:
                 print("An exception occurred")
                 
@@ -135,10 +138,12 @@ def replace_readme():
             # 替换edit_readme_md中的内容
             new_edit_readme_md[0] = new_edit_readme_md[0].replace(before_info, after_info)
     
-    # 替换EditREADME中的索引
+    # 替换 EditREADME 中的索引
     new_edit_readme_md[0] = new_edit_readme_md[0].replace("{{news}}", current_date_news_index[0])
-    # 替换EditREADME中的新文章数量索引
+    # 替换 EditREADME 中的新文章数量索引
     new_edit_readme_md[0] = new_edit_readme_md[0].replace("{{new_num}}", str(new_num))
+    # 添加 CDN
+    new_edit_readme_md[0] = new_edit_readme_md[0].replace("./_media", "https://cdn.jsdelivr.net/gh/zhaoolee/garss/_media")
         
     # 将新内容
     with open(os.path.join(os.getcwd(),"README.md"),'w') as load_f:
@@ -146,7 +151,7 @@ def replace_readme():
     
     return new_edit_readme_md
 
-# 将README.md复制到docs中
+# 将 README.md 复制到 docs 中
 
 def cp_readme_md_to_docs():
     shutil.copyfile(os.path.join(os.getcwd(),"README.md"), os.path.join(os.getcwd(), "docs","README.md"))
@@ -172,7 +177,7 @@ def main():
     cp_readme_md_to_docs()
     cp_media_to_docs()
     email_list = get_email_list()
-    send_mail(email_list, "嘎!RSS订阅", content)
+    send_mail(email_list, "嘎! RSS订阅", content)
 
 
 main()
