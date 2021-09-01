@@ -16,9 +16,12 @@
 1. 收集RSS, 打造无广告内容优质的 **头版头条** 超赞新闻页
 2. 利用Github Actions, 搜集全部RSS的头版头条新闻标题和超链接, 并自动更新到首页,当天最新发布的文章会出现🌈 标志
 
-## 新蒸熟{{new_num}}个小蛋糕🍰(文章) 生产时间 {{ga_rss_datetime}} 保质期24小时
+邮件内容区开始>
+<h2>新蒸熟{{new_num}}个小蛋糕🍰(文章) 生产时间 {{ga_rss_datetime}} 保质期24小时</h2>
 
 {{news}}
+
+<邮件内容区结束
 
 ## 已收集RSS列表
 
@@ -123,6 +126,7 @@
 | <div id="B084" style="text-align: center;"><img src="./_media/favicon/B084.png" width="30px" style="width:30px;height: auto;"/><br><span>B084</span></div> | 折影轻梦 | 崇尚自由、热爱科学与艺术 | {{latest_content}} | [订阅地址](https://nexmoe.com/atom.xml) |
 | <div id="B085" style="text-align: center;"><img src="./_media/favicon/B085.png" width="30px" style="width:30px;height: auto;"/><br><span>B085</span></div> | 不羁阁 | 行走少年郎 不羁，谓才行高远，不可羁系也 | {{latest_content}} | [订阅地址](https://bujige.net/atom.xml) |
 | <div id="B086" style="text-align: center;"><img src="./_media/favicon/B086.png" width="30px" style="width:30px;height: auto;"/><br><span>B086</span></div> | Cal Paterson | Cal Paterson's articles | {{latest_content}} | [订阅地址](https://calpaterson.com/calpaterson.rss) |
+| B087 | 3号实验室 | 树莓派; 开发板; 编程; 折腾 | {{latest_content}} | [订阅地址](https://www.labno3.com/feed/) |
 | <h2 id="数码">数码</h2> |  |   |  |
 | D001 | 少数派 | 少数派致力于更好地运用数字产品或科学方法，帮助用户提升工作效率和生活品质 | {{latest_content}}  |  [订阅地址](https://sspai.com/feed) | 
 | D002 | 数字尾巴 | 分享美好数字生活 | {{latest_content}}  |  [订阅地址](https://www.dgtle.com/rss/dgtle.xml) | 
@@ -148,6 +152,7 @@
 | <h2 id="科技类">科技类</h2> |  |   |  |
 | T001 | Hack News | 极其优质的极客新闻 | {{latest_content}}  |  [订阅地址](https://news.ycombinator.com/rss) |  
 | T002 | 奇客Solidot–传递最新科技情报 | 奇客的资讯，重要的东西 | {{latest_content}}  |  [订阅地址](https://www.solidot.org/index.rss) |  
+| T003 | 环球科学 | 科学美国人中文版，一些科普文章 | {{latest_content}}  |  [订阅地址](https://feedx.net/rss/huanqiukexue.xml) |
 | <h2 id="学习类">学习类</h2> |  |   |  |
 | L001 | 扔物线 | 帮助 Android 工程师进阶成长 | {{latest_content}}  |  [订阅地址](https://rengwuxian.com/feed) |  
 | L002 | MOOC中国 | 慕课改变你，你改变世界  | {{latest_content}}  |  [订阅地址](https://www.mooc.cn/feed) |  
@@ -161,7 +166,9 @@
 | D002 | Behance官方博客 |  Behance官方博客 | {{latest_content}}  |  [订阅地址](https://medium.com/feed/@behance) |  
 | D003 | Pinterest |  图片设计社交 | {{latest_content}}  |  [订阅地址](https://newsroom.pinterest.com/en/feed/posts.xml) |  
 | D004 | 优设 |  优秀设计联盟-优设网-设计师交流学习平台-看设计文章，学软件教程，找灵感素材，尽在优设网！ | {{latest_content}}  |  [订阅地址](https://www.uisdc.com/feed) |  
-| D005 | 腾讯CDC | 腾讯用户研究与体验设计部 | {{latest_content}}  |  [订阅地址](https://cdc.tencent.com/feed/) | 
+| D005 | 腾讯CDC | 腾讯用户研究与体验设计部 | {{latest_content}}  |  [订阅地址](https://cdc.tencent.com/feed/) |
+| D006 | ID公社 | 发现有意味的设计 | {{latest_content}}  |  [订阅地址](http://feeds.feedburner.com/ID) | 
+| D007 | 摄影世界 | 你的随身摄影杂志 | {{latest_content}}  |  [订阅地址](https://feedx.net/rss/photoworld.xml) |
 | <h2 id="内容平台">内容平台</h2> |  |   |  |
 | C001 | 知乎 | 知乎每日精选 | {{latest_content}}  |  [订阅地址](https://www.zhihu.com/rss) |  
 | C002 | 湾区日报 | 关注创业与技术，每天推送3到5篇优质英文文章 | {{latest_content}}  |  [订阅地址](https://wanqu.co/feed/) |  
@@ -183,7 +190,11 @@
 | C018 | 博客园 | 博客园首页 | {{latest_content}}  |  [订阅地址](http://feed.cnblogs.com/blog/sitehome/rss) | 
 | <div id="C021" style="text-align: center;"><img src="./_media/favicon/C021.png" width="30px" style="width:30px;height: auto;"/><br><span>C021</span></div> | 吾爱破解 | 吾爱破解 - LCG - LSG 安卓破解 病毒分析 - 最新精华 | {{latest_content}}  |  [订阅地址](https://www.52pojie.cn/forum.php?mod=guide&view=digest&rss=1) |  
 | <div id="C022" style="text-align: center;"><img src="./_media/favicon/C022.png" width="30px" style="width:30px;height: auto;"/><br><span>C022</span></div> | cnBeta.COM 精彩优秀评论 | 从cnBeta每天数千评论中精选出来的优秀评论 | {{latest_content}}  |  [订阅地址](https://www.cnbeta.com/commentrss.php) |  
-| <div id="C023" style="text-align: center;"><img src="./_media/favicon/C023.png" width="30px" style="width:30px;height: auto;"/><br><span>C023</span></div> | 比特客栈的文艺复兴 | We do not choose who we are, but we do choose who we become. | {{latest_content}}  |  [订阅地址](https://bitinn.net/feed/) |  
+| <div id="C023" style="text-align: center;"><img src="./_media/favicon/C023.png" width="30px" style="width:30px;height: auto;"/><br><span>C023</span></div> | 比特客栈的文艺复兴 | We do not choose who we are, but we do choose who we become. | {{latest_content}}  |  [订阅地址](https://bitinn.net/feed/) |
+| C024 | Pixiv(艺术家社区) | 男性向作品排行 - 前20 | {{latest_content}}  |  [订阅地址](https://rakuen.thec.me/PixivRss/male-20) |
+| C025 | Pixiv(艺术家社区) | 女性向作品排行 - 前20 | {{latest_content}}  |  [订阅地址](https://rakuen.thec.me/PixivRss/female-20) |
+| C026 | Pixiv(艺术家社区) | Pixiv每日排行 - 前20 | {{latest_content}}  |  [订阅地址](http://rakuen.thec.me/PixivRss/daily-20) |  
+| C027 | Pixiv(艺术家社区) | Pixiv每月排行 - 前20 | {{latest_content}}  |  [订阅地址](http://rakuen.thec.me/PixivRss/monthly-20) |
 | <h2 id="影视资源">影视资源</h2> |  |   |  |
 | <div id="M001" style="text-align: center;"><img src="./_media/favicon/M001.png" width="30px" style="width:30px;height: auto;"/><br><span>M001</span></div> | VIP影院 |  666影院 - 全网VIP电影免费看！ | {{latest_content}}  |  [订阅地址](https://bukaivip.com/rss) |  
 | <h2 id="游戏">游戏</h2> |  |   |  |
@@ -191,6 +202,8 @@
 | <div id="G002" style="text-align: center;"><img src="./_media/favicon/G002.png" width="30px" style="width:30px;height: auto;"/><br><span>G002</span></div> | 游研社 |  无论你是游戏死忠，还是轻度的休闲玩家，在这里都能找到感兴趣的东西。 | {{latest_content}}  |  [订阅地址](https://www.yystv.cn/rss/feed) |  
 | <h2 id="资源类">资源类</h2> |  |   |  |
 | <div id="R001" style="text-align: center;"><img src="./_media/favicon/R001.png" width="30px" style="width:30px;height: auto;"/><br><span>R001</span></div> | 书格 |  有品格的数字古籍图书馆 | {{latest_content}}  |  [订阅地址](https://www.shuge.org/feed/) |  
+| R002 | 书伴 |  为静心阅读而生 | {{latest_content}}  |  [订阅地址](https://feeds.feedburner.com/bookfere) |  
+| R003 | kindle吧 |  海量书单阅读分享者 | {{latest_content}}  |  [订阅地址](https://www.kindle8.cc/feed) |
 
 
 
