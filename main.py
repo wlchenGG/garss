@@ -10,13 +10,13 @@ import markdown
 import json
 import shutil
 from urllib.parse import urlparse
-from multiprocessing import Pool, Manager
+from multiprocessing import Pool,  Manager
 
 
 def get_rss_info(feed_url, index, rss_info_list):
     result = {"result": []}
     request_success = False
-    # 如果请求出错，则重新请求，最多五次
+    # 如果请求出错,则重新请求,最多五次
     for i in range(3):
         if(request_success == False):
             try:
@@ -25,7 +25,7 @@ def get_rss_info(feed_url, index, rss_info_list):
                     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
                     "Content-Encoding": "gzip"
                 }
-                # 三次分别设置5，10，15秒钟超时
+                # 三次分别设置5, 10, 15秒钟超时
                 feed_url_content = requests.get(feed_url,  timeout= (i+1)*5 ,headers = headers).content
                 feed = feedparser.parse(feed_url_content)
                 feed_entries = feed["entries"]
@@ -57,9 +57,9 @@ def get_rss_info(feed_url, index, rss_info_list):
     remaining_amount = 0
 
     for tmp_rss_info_atom in rss_info_list:
-        if(isinstance(tem_rss_info_atom, int)):
+        if(isinstance(tmp_rss_info_atom, int)):
             remaining_amount = remaining_amount + 1
-
+            
     print("当前进度 | 剩余数量", remaining_amount, "已完成==>>", len(rss_info_list)-remaining_amount)
     return result["result"]
     
@@ -78,7 +78,7 @@ def send_mail(email, title, contents):
         if(os.environ["HOST"]):
             host = os.environ["HOST"]
     except:
-        print("无法获取 github 的 secrets 配置信息，开始使用本地变量")
+        print("无法获取github的secrets配置信息,开始使用本地变量")
         if(os.path.exists(os.path.join(os.getcwd(),"secret.json"))):
             with open(os.path.join(os.getcwd(),"secret.json"),'r') as load_f:
                 load_dict = json.load(load_f)
@@ -111,26 +111,27 @@ def replace_readme():
         # 填充统计时间
         ga_rss_datetime = datetime.fromtimestamp(int(time.time()),pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d %H:%M:%S')
         new_edit_readme_md[0] = new_edit_readme_md[0].replace("{{ga_rss_datetime}}", str(ga_rss_datetime))
-        
+
         # 使用进程池进行数据获取，获得rss_info_list
-
-
         before_info_list_len = len(before_info_list)
         rss_info_list = Manager().list(range(before_info_list_len))
+        print('初始化完毕==》', rss_info_list)
 
-        print("初始化完毕==》", rss_info_list)
+        
 
-        # 创建一个最多开启3个进程的进程池
+        # 创建一个最多开启3进程的进程池
         po = Pool(6)
 
         for index, before_info in enumerate(before_info_list):
             # 获取link
             link = re.findall(r'\[订阅地址\]\((.*)\)', before_info)[0]
             po.apply_async(get_rss_info,(link, index, rss_info_list))
-        
-        # 关闭进程池，不再接收新任务，开始执行任务
+
+
+        # 关闭进程池,不再接收新的任务,开始执行任务
         po.close()
 
+        # 主进程等待所有子进程结束
         po.join()
         print("----结束----", rss_info_list)
 
@@ -139,11 +140,11 @@ def replace_readme():
             # 获取link
             link = re.findall(r'\[订阅地址\]\((.*)\)', before_info)[0]
             # 生成超链接
-            rss_info = get_info_info[index]
+            rss_info = rss_info_list[index]
             latest_content = ""
             parse_result = urlparse(link)
             scheme_netloc_url = str(parse_result.scheme)+"://"+str(parse_result.netloc)
-            latest_content = "[暂无法通过爬虫获取信息，点击进入源网站主页]("+ scheme_netloc_url +")"
+            latest_content = "[暂无法通过爬虫获取信息, 点击进入源网站主页]("+ scheme_netloc_url +")"
 
             # 加入到索引
             try:
@@ -155,12 +156,11 @@ def replace_readme():
                         else:
                             current_date_news_index[0] = current_date_news_index[0] + "<div style='line-height:3;background-color:#FAF6EA;' ><a href='" + rss_info_atom["link"] + "' " + 'style="line-height:2;text-decoration:none;display:block;color:#584D49;">' + "🌈 ‣ " + rss_info_atom["title"] + " | 第" + str(new_num) +"篇" + "</a></div>"
 
-
-
             except:
                 print("An exception occurred")
-
             
+
+                
             if(len(rss_info) > 0):
                 rss_info[0]["title"] = rss_info[0]["title"].replace("|", "\|")
                 rss_info[0]["title"] = rss_info[0]["title"].replace("[", "\[")
@@ -181,24 +181,25 @@ def replace_readme():
             # 替换edit_readme_md中的内容
             new_edit_readme_md[0] = new_edit_readme_md[0].replace(before_info, after_info)
     
-    # 替换 EditREADME 中的索引
+    # 替换EditREADME中的索引
     new_edit_readme_md[0] = new_edit_readme_md[0].replace("{{news}}", current_date_news_index[0])
-    # 替换 EditREADME 中的新文章数量索引
+    # 替换EditREADME中的新文章数量索引
     new_edit_readme_md[0] = new_edit_readme_md[0].replace("{{new_num}}", str(new_num))
-    # 添加 CDN
+    # 添加CDN
     new_edit_readme_md[0] = new_edit_readme_md[0].replace("./_media", "https://cdn.jsdelivr.net/gh/zhaoolee/garss/_media")
         
     # 将新内容
     with open(os.path.join(os.getcwd(),"README.md"),'w') as load_f:
         load_f.write(new_edit_readme_md[0])
     
+
     mail_re = r'邮件内容区开始>([.\S\s]*)<邮件内容区结束'
     reResult = re.findall(mail_re, new_edit_readme_md[0])
     new_edit_readme_md[1] = reResult
-
+    
     return new_edit_readme_md
 
-# 将 README.md 复制到 docs 中
+# 将README.md复制到docs中
 
 def cp_readme_md_to_docs():
     shutil.copyfile(os.path.join(os.getcwd(),"README.md"), os.path.join(os.getcwd(), "docs","README.md"))
@@ -220,8 +221,7 @@ def get_email_list():
 
 def main():
     readme_md = replace_readme()
-
-    content = markdown.markdown(readme_md[1], extensions=['tables', 'fenced_code'])
+    content = markdown.markdown(readme_md[0], extensions=['tables', 'fenced_code'])
     cp_readme_md_to_docs()
     cp_media_to_docs()
     email_list = get_email_list()
@@ -229,10 +229,13 @@ def main():
     mail_re = r'邮件内容区开始>([.\S\s]*)<邮件内容区结束'
     reResult = re.findall(mail_re, readme_md[0])
 
+    # mail_content = markdown.markdown(reResult)
+
     try:
         send_mail(email_list, "嘎!RSS订阅", reResult)
     except Exception as e:
         print("==邮件设信息置错误===》》", e)
+
 
 if __name__ == "__main__":
     main()
